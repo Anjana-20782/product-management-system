@@ -34,7 +34,7 @@ body {
   justify-content: center;
 }
 
-/* General Container Styles */
+
 .container {
   width: 100%;
   max-width: 1100px;
@@ -45,7 +45,7 @@ body {
   box-shadow: var(--shadow-light);
 }
 
-/* Auth Page Specifics (Login) */
+
 .auth-container {
   display: flex;
   align-items: center;
@@ -72,7 +72,32 @@ body {
   font-weight: 600;
 }
 
-/* Dashboard Layout */
+
+
+.login-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-1px);
+}
+
+.login-btn:active {
+  transform: translateY(0);
+}
+
+
 .dashboard-container {
   width: 100%;
   max-width: 1200px;
@@ -116,7 +141,7 @@ body {
   transform: translateY(-1px);
 }
 
-/* Form Elements */
+
 input[type="text"],
 input[type="number"],
 input[type="password"] {
@@ -139,20 +164,20 @@ input[type="password"]:focus {
   outline: none;
 }
 
-/* Update Save Product button to be small like Edit button */
+
 button#saveBtn {
-  width: auto !important;      /* Removes the full-width look */
-  min-width: 120px;            /* Gives it a nice base width */
-  padding: 10px 25px !important; /* Matches the larger padding of dashboard buttons */
+  width: auto !important;      
+  min-width: 120px;        
+  padding: 10px 25px !important; 
   background-color: var(--primary-color);
   color: var(--text-light);
   border: none;
-  border-radius: 5px;          /* Matches your dashboard corner style */
+  border-radius: 5px;        
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  display: block;              /* Allows it to respect margins */
+  display: block;       
   margin-top: 10px;
 }
 
@@ -165,7 +190,6 @@ button#saveBtn:active {
   transform: translateY(0);
 }
 
-/* Product Form Section */
 .product-form-section {
   background: var(--text-light);
   padding: 30px;
@@ -181,7 +205,7 @@ button#saveBtn:active {
   font-weight: 600;
 }
 
-/* Product Report Section & Table */
+
 .product-report-section {
   background: var(--text-light);
   padding: 30px;
@@ -244,34 +268,34 @@ table tbody tr:hover {
   background-color: var(--background-dark);
 }
 
-/* Action Buttons Container - FIXED to horizontal row */
+
 .action-buttons {
   display: flex;
-  flex-direction: row; /* Ensures buttons are side-by-side */
-  gap: 10px;           /* Space between the two buttons */
+  flex-direction: row; 
+  gap: 10px;           
   justify-content: flex-start;
   align-items: center;
   
 }
 
-/* Specific Style for Table Buttons to make them small */
+
 .action-buttons button {
-  width: auto !important;      /* Overrides the 100% width rule */
-  min-width: 70px;             /* Ensures a consistent small size */
-  padding: 6px 12px !important; /* Smaller internal padding */
-  font-size: 0.85em !important; /* Smaller text size */
+  width: auto !important;      
+  min-width: 70px;             
+  padding: 6px 12px !important; 
+  font-size: 0.85em !important; 
   font-weight: 500;
   border-radius: 4px;
   cursor: pointer;
   color: #fff;
   transition: all 0.2s ease;
   margin: 0;  
-  border: none;                 /* Remove any extra margins */
+  border: none;                 
 }
 
-/* Edit Button - Green */
+
 .action-buttons .edit-btn {
-  background-color: var(--success-color) !important; /* Uses your Green variable */
+  background-color: var(--success-color) !important; 
 }
 
 .action-buttons .edit-btn:hover {
@@ -279,12 +303,91 @@ table tbody tr:hover {
   transform: translateY(-1px);
 }
 
-/* Delete Button - Red */
+
 .action-buttons .delete-btn {
-  background-color: var(--danger-color) !important; /* Uses your Red variable */
+  background-color: var(--danger-color) !important; 
 }
 
 .action-buttons .delete-btn:hover {
   background-color: #c0392b !important;
   transform: translateY(-1px);
+}
+
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;  
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrapper table {
+  min-width: 600px;  
+}
+
+
+/* responisve tablet */
+
+@media (max-width: 900px) {
+
+  .dashboard-container {
+    padding: 15px;
+  }
+
+  .product-form-section,
+  .product-report-section {
+    padding: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2em;
+  }
+}
+
+
+/* Mobiles */
+@media (max-width: 600px) {
+
+  body {
+    padding: 10px;
+  }
+
+  .auth-card {
+    padding: 25px;
+  }
+
+  .auth-card h2 {
+    font-size: 1.7em;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.6em;
+  }
+
+  .logout-btn {
+    width: 100%;
+  }
+
+  .product-form-section input,
+  .product-form-section button {
+    width: 100%;
+  }
+
+  table {
+    font-size: 0.85em;
+  }
+
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .action-buttons button {
+    width: 100%;
+  }
 }

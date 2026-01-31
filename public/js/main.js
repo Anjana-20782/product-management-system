@@ -2,12 +2,22 @@ const API = "http://localhost:3000/api/products";
 
 let editId = null;
 
-/* INPUT ELEMENTS */
+
 const nameInput = document.getElementById("name");
 const priceInput = document.getElementById("price");
 const qtyInput = document.getElementById("qty");
 
-/* LOGIN */
+
+if (window.location.pathname.includes("dashboard.html")) {
+
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (!isLoggedIn) {
+    window.location.href = "/";
+  }
+}
+
+// login
 function login() {
 
   const user = document.getElementById("username");
@@ -18,13 +28,14 @@ function login() {
     user.value === "admin" &&
     pass.value === "1234"
   ) {
-    location.href = "dashboard.html";
+    localStorage.setItem("isLoggedIn", "true");
+    window.location.href = "dashboard.html";
   } else {
-    error.innerText = "Invalid Login";
+    error.innerText = "Invalid Username or Password";
   }
 }
 
-/* LOAD PRODUCTS */
+// load products
 async function loadProducts() {
 
   const res = await fetch(API);
@@ -36,7 +47,7 @@ async function loadProducts() {
 
     const safeName = encodeURIComponent(p.name);
 
-   /* Inside your loadProducts loop */
+  
 html += `
   <tr>
     <td>${p.name}</td>
@@ -61,7 +72,7 @@ html += `
   loadReport();
 }
 
-/* ADD / UPDATE */
+// add or update
 async function saveProduct() {
 
   const name = nameInput.value.trim();
@@ -107,7 +118,7 @@ async function saveProduct() {
   loadProducts();
 }
 
-/* EDIT */
+// edit
 function editProduct(id, encodedName, price, qty) {
 
   editId = id;
@@ -119,7 +130,7 @@ function editProduct(id, encodedName, price, qty) {
   document.getElementById("saveBtn").innerText = "Update";
 }
 
-/* DELETE */
+// delete
 async function deleteProduct(id) {
 
   if (!confirm("Delete this product?")) return;
@@ -131,7 +142,7 @@ async function deleteProduct(id) {
   loadProducts();
 }
 
-/* REPORT */
+// report
 async function loadReport() {
 
   const res = await fetch(`${API}/report`);
@@ -141,7 +152,7 @@ async function loadReport() {
     `Total Products: ${data.total}, Total Qty: ${data.qty}`;
 }
 
-/* CLEAR */
+// clear
 function clearForm() {
 
   nameInput.value = "";
@@ -153,7 +164,14 @@ function clearForm() {
   document.getElementById("saveBtn").innerText = "Save";
 }
 
-/* AUTO LOAD */
+
 if (document.getElementById("list")) {
   loadProducts();
+}
+
+// Logout function
+function logout() {
+  
+  localStorage.removeItem("isLoggedIn");
+  window.location.href = "/";
 }
