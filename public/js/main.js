@@ -6,6 +6,8 @@ let editId = null;
 const nameInput = document.getElementById("name");
 const priceInput = document.getElementById("price");
 const qtyInput = document.getElementById("qty");
+const saveBtn = document.getElementById("saveBtn");
+
 
 
 if (window.location.pathname.includes("dashboard.html")) {
@@ -24,16 +26,27 @@ function login() {
   const pass = document.getElementById("password");
   const error = document.getElementById("error");
 
-  if (
-    user.value === "admin" &&
-    pass.value === "1234"
-  ) {
+  if (!user.value || !pass.value) {
+    error.innerText = "Please enter username and password";
+    return;
+  }
+
+  if (user.value === "admin" && pass.value === "1234") {
+
     localStorage.setItem("isLoggedIn", "true");
-    window.location.href = "dashboard.html";
+
+    showNotification("Login Successful");
+
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 800);
+
   } else {
+
     error.innerText = "Invalid Username or Password";
   }
 }
+
 
 // load products
 async function loadProducts() {
@@ -49,21 +62,28 @@ async function loadProducts() {
 
   
 html += `
-  <tr>
-    <td>${p.name}</td>
-    <td>${p.price}</td>
-    <td>${p.quantity}</td>
-    <td>
-      <div class="action-buttons">
-        <button class="edit-btn" onclick="editProduct(${p.id}, '${safeName}', ${p.price}, ${p.quantity})">
-          Edit
-        </button>
-        <button class="delete-btn" onclick="deleteProduct(${p.id})">
-          Delete
-        </button>
-      </div>
-    </td>
-  </tr>
+<tr>
+  <td>${p.name}</td>
+  <td>${p.price}</td>
+  <td>${p.quantity}</td>
+  <td>
+    <div class="action-buttons">
+
+      <button 
+        class="edit-btn"
+        onclick="editProduct(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, ${p.quantity})">
+        Edit
+      </button>
+
+      <button 
+        class="delete-btn"
+        onclick="deleteProduct(${p.id})">
+        Delete
+      </button>
+
+    </div>
+  </td>
+</tr>
 `;
   });
 
@@ -72,74 +92,121 @@ html += `
   loadReport();
 }
 
+// Show Notification
+function showNotification(message, type = "success") {
+
+  const box = document.getElementById("notification");
+
+  box.innerText = message;
+  box.className = type; // only success or error
+  box.style.display = "block";
+
+  setTimeout(() => {
+    box.style.display = "none";
+  }, 3000); // hide after 2.5 sec
+}
+
 // add or update
 async function saveProduct() {
 
-  const name = nameInput.value.trim();
-  const price = priceInput.value;
-  const qty = qtyInput.value;
+  const nameVal = nameInput.value.trim();
+  const priceVal = priceInput.value;
+  const qtyVal = qtyInput.value;
 
-  if (!name || !price || !qty) {
-    alert("All fields are required");
+  if (!nameVal || !priceVal || !qtyVal) {
+    showNotification("All fields are required", "error");
     return;
   }
 
-  const product = {
-    name,
-    price: Number(price),
-    quantity: Number(qty)
+  const data = {
+    name: nameVal,
+    price: priceVal,
+    quantity: qtyVal
   };
 
-  if (editId) {
+  try {
 
-    await fetch(`${API}/${editId}`, {
-      method: "PUT",
+    let url = API;
+    let method = "POST";
+
+    // UPDATE MODE
+    if (editId !== null) {
+      url = `${API}/${editId}`;
+      method = "PUT";
+    }
+
+    const res = await fetch(url, {
+      method,
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(product)
+      body: JSON.stringify(data)
     });
 
-    editId = null;
+    if (!res.ok) {
+      throw new Error("Save failed");
+    }
 
-  } else {
+    showNotification(
+      editId ? "Product Updated Successfully" : "Product Added Successfully",
+      "success"
+    );
 
-    await fetch(API, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(product)
-    });
+    clearForm();
+    loadProducts();
 
+  } catch (error) {
+
+    console.error(error);
+
+    showNotification("Operation Failed", "error");
   }
-
-  clearForm();
-  loadProducts();
 }
 
+
+
 // edit
-function editProduct(id, encodedName, price, qty) {
+function editProduct(id, nameVal, priceVal, qtyVal) {
+
+  nameInput.value = nameVal;
+  priceInput.value = priceVal;
+  qtyInput.value = qtyVal;
 
   editId = id;
 
-  nameInput.value = decodeURIComponent(encodedName);
-  priceInput.value = price;
-  qtyInput.value = qty;
+  saveBtn.innerText = "Update Product";
 
-  document.getElementById("saveBtn").innerText = "Update";
+  showNotification("Edit Mode Enabled");
 }
+
 
 // delete
 async function deleteProduct(id) {
 
-  if (!confirm("Delete this product?")) return;
+  const confirmDelete = confirm("Are you sure you want to delete this product?");
 
-  await fetch(`${API}/${id}`, {
-    method: "DELETE"
-  });
+  if (!confirmDelete) return;
 
-  loadProducts();
+  try {
+
+    const res = await fetch(`${API}/${id}`, {
+      method: "DELETE"
+    });
+
+    if (!res.ok) {
+      throw new Error("Delete failed");
+    }
+
+    showNotification("Product deleted successfully", "success");
+
+    loadProducts();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showNotification("Unable to delete product", "error");
+  }
 }
 
 // report
@@ -161,7 +228,7 @@ function clearForm() {
 
   editId = null;
 
-  document.getElementById("saveBtn").innerText = "Save";
+  saveBtn.innerText = "Add Product";
 }
 
 
@@ -171,7 +238,12 @@ if (document.getElementById("list")) {
 
 // Logout function
 function logout() {
-  
+
+  showNotification("Logged out successfully");
+
   localStorage.removeItem("isLoggedIn");
-  window.location.href = "/";
+
+  setTimeout(() => {
+    window.location.href = "/";
+  }, 800);
 }
