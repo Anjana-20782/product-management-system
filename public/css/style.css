@@ -1,0 +1,290 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #4A90E2;
+  --primary-dark: #357ABD;
+  --secondary-color: #50E3C2;
+  --background-light: #F4F7F6;
+  --background-dark: #E0E4E7;
+  --text-dark: #2C3E50;
+  --text-light: #ECF0F1;
+  --border-color: #DDE2E5;
+  --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 6px 18px rgba(0, 0, 0, 0.12);
+  --danger-color: #E74C3C;
+  --success-color: #2ECC71;
+  --border-radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: var(--background-light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* General Container Styles */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: var(--text-light);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+}
+
+/* Auth Page Specifics (Login) */
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, var(--background-light) 0%, var(--background-dark) 100%);
+}
+
+.auth-card {
+  background: var(--text-light);
+  padding: 40px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-medium);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.auth-card h2 {
+  margin-bottom: 30px;
+  color: var(--primary-color);
+  font-size: 2.2em;
+  font-weight: 600;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--background-light);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  margin-bottom: 30px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.dashboard-header h1 {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 2.5em;
+  color: var(--text-dark);
+  font-weight: 700;
+  margin: 0;
+}
+
+.logout-btn {
+  background-color: var(--danger-color);
+  color: var(--text-light);
+  padding: 8px 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: darken(var(--danger-color), 10%);
+  transform: translateY(-1px);
+}
+
+/* Form Elements */
+input[type="text"],
+input[type="number"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 1em;
+  color: var(--text-dark);
+  background-color: var(--text-light);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  outline: none;
+}
+
+/* Update Save Product button to be small like Edit button */
+button#saveBtn {
+  width: auto !important;      /* Removes the full-width look */
+  min-width: 120px;            /* Gives it a nice base width */
+  padding: 10px 25px !important; /* Matches the larger padding of dashboard buttons */
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border: none;
+  border-radius: 5px;          /* Matches your dashboard corner style */
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: block;              /* Allows it to respect margins */
+  margin-top: 10px;
+}
+
+button#saveBtn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+button#saveBtn:active {
+  transform: translateY(0);
+}
+
+/* Product Form Section */
+.product-form-section {
+  background: var(--text-light);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  margin-bottom: 30px;
+}
+
+.product-form-section h2 {
+  margin-bottom: 25px;
+  color: var(--text-dark);
+  font-size: 1.8em;
+  font-weight: 600;
+}
+
+/* Product Report Section & Table */
+.product-report-section {
+  background: var(--text-light);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+}
+
+.product-report-section h3 {
+  margin-bottom: 20px;
+  color: var(--text-dark);
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.report-message {
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.report-message.success {
+  background-color: #D4EDDA;
+  color: #155724;
+  border: 1px solid #C3E6CB;
+}
+
+.report-message.error {
+  background-color: #F8D7DA;
+  color: #721C24;
+  border: 1px solid #F5C6CB;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table thead {
+  background-color: var(--background-dark);
+}
+
+table th {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 0.9em;
+  color: var(--text-dark);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+}
+
+table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95em;
+}
+
+table tbody tr:hover {
+  background-color: var(--background-dark);
+}
+
+/* Action Buttons Container - FIXED to horizontal row */
+.action-buttons {
+  display: flex;
+  flex-direction: row; /* Ensures buttons are side-by-side */
+  gap: 10px;           /* Space between the two buttons */
+  justify-content: flex-start;
+  align-items: center;
+  
+}
+
+/* Specific Style for Table Buttons to make them small */
+.action-buttons button {
+  width: auto !important;      /* Overrides the 100% width rule */
+  min-width: 70px;             /* Ensures a consistent small size */
+  padding: 6px 12px !important; /* Smaller internal padding */
+  font-size: 0.85em !important; /* Smaller text size */
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.2s ease;
+  margin: 0;  
+  border: none;                 /* Remove any extra margins */
+}
+
+/* Edit Button - Green */
+.action-buttons .edit-btn {
+  background-color: var(--success-color) !important; /* Uses your Green variable */
+}
+
+.action-buttons .edit-btn:hover {
+  background-color: #27ae60 !important;
+  transform: translateY(-1px);
+}
+
+/* Delete Button - Red */
+.action-buttons .delete-btn {
+  background-color: var(--danger-color) !important; /* Uses your Red variable */
+}
+
+.action-buttons .delete-btn:hover {
+  background-color: #c0392b !important;
+  transform: translateY(-1px);
+}

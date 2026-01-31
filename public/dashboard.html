@@ -2,35 +2,41 @@
 <html>
 <head>
   <title>Dashboard</title>
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <h1>Product Dashboard</h1>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </header>
 
-<h2>Product Dashboard</h2>
+    <div class="product-form-section">
+      <h2>Add New Product</h2>
+      <input type="text" id="name" placeholder="Product Name">
+      <input type="number" id="price" placeholder="Price">
+      <input type="number" id="qty" placeholder="Quantity">
+      <button id="saveBtn" onclick="saveProduct()">Add Product</button>
+    </div>
 
-<div class="form-box">
+    <div class="product-report-section">
+      <h3>Product Report</h3>
+      <p id="report" class="report-message"></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="list"></tbody>
+      </table>
+    </div>
+  </div>
 
-  <input id="name" placeholder="Name">
-  <input id="price" type="number" placeholder="Price">
-  <input id="qty" type="number" placeholder="Quantity">
-
-  <button onclick="addProduct()">Add Product</button>
-
-</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Qty</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-
-  <tbody id="list"></tbody>
-</table>
-
-<script src="js/main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
