@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<h2>Product Dashboard</h2>
+
+<div class="form-box">
+
+  <input id="name" placeholder="Name">
+  <input id="price" type="number" placeholder="Price">
+  <input id="qty" type="number" placeholder="Quantity">
+
+  <button onclick="addProduct()">Add Product</button>
+
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Qty</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody id="list"></tbody>
+</table>
+
+<script src="js/main.js"></script>
+</body>
+</html>
